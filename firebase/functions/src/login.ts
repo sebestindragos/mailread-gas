@@ -26,9 +26,9 @@ export async function loginWithGoogle(authCode: string) {
   });
 
   return {
-    idToken: result.data.idToken,
-    refreshToken: result.data.refreshToken,
-    expiresIn: result.data.expiresIn,
-    oauthIdToken: result.data.oauthIdToken,
+    id_token: result.data.idToken,
+    refresh_token: result.data.refreshToken,
+    expires_in: result.data.expiresIn,
+    oauth_id_token: result.data.oauthIdToken,
   };
 }

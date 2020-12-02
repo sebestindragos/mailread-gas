@@ -1,3 +1,5 @@
+import { buildComposeCard } from "./compose";
+import { buildErrorCard } from "./error";
 import { checkAuth } from "./oauth";
 
 (global as any).startContextualApp = (e: any) => {
@@ -9,6 +11,20 @@ import { checkAuth } from "./oauth";
     return [buildHomeCard().build()];
   } catch (error) {
     console.log("startContextualApp failed");
+    return [buildErrorCard(error)];
+  }
+};
+
+(global as any).startComposeApp = (e: any) => {
+  console.log("startComposeApp start");
+  // display OAuth prompt if user is not logged in
+  checkAuth(); // must be outside of try catch
+
+  try {
+    return [buildComposeCard().build()];
+  } catch (error) {
+    console.log("startComposeApp failed");
+    return [buildErrorCard(error)];
   }
 };
 

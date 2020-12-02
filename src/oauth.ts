@@ -14,9 +14,15 @@ export function getOAuthService() {
   const tokenUri = PropertiesService.getScriptProperties().getProperty(
     "OAUTH_TOKEN_URI"
   );
+  const firebaseApiKey = PropertiesService.getScriptProperties().getProperty(
+    "FIREBASE_API_KEY"
+  );
   return OAuth2.createService("MailRead")
     .setAuthorizationBaseUrl("https://accounts.google.com/o/oauth2/v2/auth")
     .setTokenUrl(tokenUri)
+    .setRefreshUrl(
+      `https://securetoken.googleapis.com/v1/token?key=${firebaseApiKey}`
+    )
     .setClientId(clientId)
     .setClientSecret(clientSecret)
     .setScope(scope)
@@ -29,8 +35,10 @@ export function getOAuthService() {
  * Callback method for OAuth flow.
  */
 (global as any).oauthCallback = function oauthCallback(callbackRequest: any) {
+  console.log("got oauth response", callbackRequest);
   const authorized = getOAuthService().handleCallback(callbackRequest);
   if (authorized) {
+    console.log("authorized", authorized);
     // check if the
     return HtmlService.createHtmlOutput(
       "Success! <script>setTimeout(function() { top.window.close() }, 1);</script>"

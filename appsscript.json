@@ -60,6 +60,7 @@
     }
   },
   "urlFetchWhitelist": [
-    "https://us-central1-mailread-1f585.cloudfunctions.net/"
+    "https://us-central1-mailread-1f585.cloudfunctions.net/",
+    "https://mailread-1f585.firebaseio.com/"
   ]
 }
