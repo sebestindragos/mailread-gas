@@ -2,7 +2,7 @@
   "addOns": {
     "common": {
       "name": "Mail Read (local)",
-      "logoUrl": "http://lorempixel.com/200/200/",
+      "logoUrl": "https://firebasestorage.googleapis.com/v0/b/mailread-1f585.appspot.com/o/mailread-icon500.png?alt=media&token=d403bb33-c484-485e-8bcd-faa16b75f9c2",
       "layoutProperties": {
         "primaryColor": "#417FED"
       },
