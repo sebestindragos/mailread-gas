@@ -20,15 +20,26 @@ export const login = functions.https.onRequest(async (request, response) => {
 
 export const track = functions.https.onRequest(async (request, response) => {
   try {
+    // dump request headers for debugging
+    functions.logger.info("headers", request.headers);
+
     const userId = request.query.uid as string;
     const folderId = request.query.fid as string;
     const pixelId = request.query.pid as string;
 
-    const imageBuffer = await trackMailOpen({ userId, folderId, pixelId });
+    const result = await trackMailOpen({
+      userId,
+      folderId,
+      pixelId,
+      headers: request.headers,
+    });
 
-    response.setHeader("Content-Type", "image/png");
-    response.setHeader("Content-Length", imageBuffer.length);
-    response.send(imageBuffer);
+    // add outgoing headers
+    Object.entries(result.headers).forEach(([key, value]) =>
+      response.setHeader(key, value)
+    );
+
+    response.send(result.imageBuffer);
   } catch (error) {
     functions.logger.error("tracking failed failed", error);
     response.status(500).json({ message: error.message });
